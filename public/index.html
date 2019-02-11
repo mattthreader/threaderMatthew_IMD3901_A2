@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BalloonsVR</title>
+        <meta name="description" content="BalloonsVR by Matthew Threader">
+        <!-- Required External Javascript Files -->
+        <script src="/js/aframe.min.js"></script> 
+        <script src="/js/CreateBalloon.js"></script>
+        <script src="/js/DestroyBalloon.js"></script>
+        <script src="/js/Button.js"></script>
+    </head>
+    <body>
+        <!-- Main Scene -->
+        <a-scene>
+                <!-- Scene Assets -->
+                <a-assets timeout="3000">
+                        <a-asset-item crossorigin="anonymous" id="balloon-obj" src="/assets/models/balloon.obj">>
+                        <a-asset-item crossorigin="anonymous" id="destroy-sound" src="/assets/sounds/balloon_pop.mp3" response-type="arraybuffer"></a-asset-item>
+                        <a-asset-item crossorigin="anonymous" id="create-sound" src="/assets/sounds/button_click.mp3" response-type="arraybuffer"></a-asset-item>
+                </a-assets>
+
+                <!-- Camera and Cursor -->
+                <a-entity camera look-controls wasd-controls position="0 1 -12.5">
+                        <a-entity cursor="fuse: false;"
+                                  position="0 0 -1"
+                                  geometry="primitive: ring; radiusInner: 0.00005; radiusOuter: 0.01 "
+                                  material="color: black; shader: flat; opacity: 0.5">
+                        </a-entity>
+                </a-entity>
+
+                <!-- Sound Components -->
+                <a-entity id="deleteSound" sound="src:#destroy-sound"></a-entity>
+                <a-entity id="createSound" sound="src:#create-sound"></a-entity>
+
+                <!-- Light Components -->
+                <a-entity light="type: ambient; intensity:0.6 color:#bbb;"></a-entity>
+                <a-entity light="castShadow:true;intensity:0.8;shadowMapWidth:4096;shadowMapHeight:4096;angle:60.07;shadowCameraLeft:-30;shadowCameraRight:30;shadowCameraTop:30;shadowCameraBottom:-30" position="30 30 -30" rotation="0 0 90"></a-entity>
+                
+                <!-- Balloon Group -->
+                <a-entity id="Balloons"></a-entity>
+
+                <!-- Sky Component -->
+                <a-entity id="sky"
+                    geometry="primitive:sphere; radius:500;"
+                    material="shader:flat; color:#F5F5F5; side:back; height:2048; width:2048">
+                </a-entity>
+
+                <!-- UI Components -->
+                <a-image id="logo" src="/assets/textures/logo.png" position="0 2 -15" scale="3 1.5 1"></a-image>
+                <a-text value="Turn Around to Play" position="-0.5 1.5 -15" color="black" scale="0.5 0.5 1"></a-text>
+                
+                <!-- Envoiroment Components -->                
+                <a-plane position="0 0 0" rotation="-90 0 0" width="60" height="60" shadow="cast:true; receive:true;"  material="color:#C8C8C8;" ></a-plane>
+                <a-entity id="buttonbase" position="0 0 -11" geometry="primitive: box" material="color: black" scale="0.75 0.75 0.75" shadow="cast:true; receive:true;"></a-entity>                
+                
+                <!-- Button Components --> 
+                <a-entity id="button" position="0 0.5 -11" cursor-listener geometry="primitive: cylinder"  button-hover material="color: #780000" scale="0.15 0.15 0.15" shadow="cast:true; receive:true;">
+                
+                    <!-- Button Animation Components -->                    
+                    <a-animation begin="click" attribute="position" from="0 0.45 -11"
+                        to="0 0.4 -11" dur="500" fill="both"></a-animation>    
+                    <a-animation begin="click" attribute="position" from="0 0.4 -11"
+                        to="0 0.45 -11" dur="500" fill="both"></a-animation>            
+                </a-entity>   
+        </a-scene>
+    </body>
+</html>
